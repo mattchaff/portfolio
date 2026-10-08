@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matthieu Chaffanjon — Portfolio</title>
+<meta name="description" content="Full-cycle recruiter specializing in AI research & engineering talent. Selected placements across AI, research and engineering roles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111111;
+    --sub:#595959;
+    --faint:#8a8a8a;
+    --line:#e6e6e6;
+    --card:#f4f4f4;
+    --bg:#ffffff;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Lato",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+
+  /* top nav */
+  .topnav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav-inner{
+    max-width:var(--max);margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{font-weight:900;font-size:16px;text-decoration:none;white-space:nowrap;}
+  .navlinks{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;}
+  .navlinks::-webkit-scrollbar{display:none;}
+  .navlinks a{
+    font-size:13px;font-weight:700;color:var(--sub);text-decoration:none;
+    white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent;
+  }
+  .navlinks a:hover{color:var(--ink);border-bottom-color:var(--ink);}
+
+  section{padding:72px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:220px 1fr;gap:48px;align-items:start;padding-top:56px;}
+  .hero-photo{
+    width:220px;height:220px;border-radius:50%;overflow:hidden;
+    background:var(--card);
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-name{font-size:52px;line-height:1.05;font-weight:900;margin:0 0 10px;letter-spacing:-0.01em;}
+  .hero-title{
+    font-size:14px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--sub);margin:0 0 22px;
+  }
+  .hero-desc{font-size:17px;line-height:1.6;color:#333;max-width:760px;margin:0;}
+
+  .timeline{display:flex;align-items:center;gap:18px;margin:40px 0 0;flex-wrap:wrap;}
+  .tl-item{display:flex;align-items:center;gap:12px;}
+  .tl-logo{width:48px;height:48px;border-radius:10px;overflow:hidden;background:var(--card);flex:none;}
+  .tl-logo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .tl-name{font-weight:700;font-size:15px;margin:0;}
+  .tl-date{font-size:12px;color:var(--faint);margin:2px 0 0;}
+  .tl-arrow{color:var(--faint);font-size:18px;}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);margin-top:40px;
+  }
+  .stat{padding:22px 24px 0 0;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat-num{font-size:34px;font-weight:900;line-height:1;}
+  .stat-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);margin-top:8px;}
+
+  .contact-row{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+    margin-top:28px;padding-top:20px;font-size:13px;color:var(--sub);
+  }
+  .contact-row a{text-decoration:none;}
+  .contact-row a:hover{text-decoration:underline;}
+
+  /* section headers */
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--faint);margin:0 0 10px;}
+  h2.sec-title{font-size:34px;font-weight:900;margin:0 0 14px;letter-spacing:-0.01em;}
+  .sec-sub{font-size:16px;color:var(--sub);max-width:720px;line-height:1.6;margin:0 0 36px;}
+
+  /* expertise */
+  .exp-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;margin-bottom:40px;}
+  .exp-col h3.minor{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:0 0 16px;}
+  .lifecycle-item{padding:16px 0;border-top:1px solid var(--line);}
+  .lifecycle-item:last-child{border-bottom:1px solid var(--line);}
+  .lc-head{display:flex;gap:14px;align-items:baseline;}
+  .lc-num{font-size:13px;font-weight:700;color:var(--faint);}
+  .lc-title{font-size:17px;font-weight:700;margin:0;}
+  .lc-desc{font-size:14px;color:var(--sub);margin:6px 0 0 32px;line-height:1.5;}
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .tag{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:6px 14px;color:#333;}
+
+  .profiles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .profile-card{background:var(--card);border-radius:14px;padding:20px;}
+  .profile-card h4{font-size:16px;margin:0 0 8px;}
+  .profile-card p{font-size:13.5px;color:var(--sub);line-height:1.5;margin:0;}
+
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:32px;align-items:start;padding-top:36px;border-top:1px solid var(--line);}
+  .why-item .lc-num{display:block;margin-bottom:6px;}
+  .why-item h4{font-size:16px;margin:0 0 8px;}
+  .why-item p{font-size:13.5px;color:var(--sub);line-height:1.5;margin:0;}
+  .tools h4.minor{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:0 0 14px;}
+  .tool-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .tool-logo{width:34px;height:34px;border-radius:9px;overflow:hidden;background:var(--card);flex:none;}
+  .tool-logo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .tool-row strong{display:block;font-size:14px;}
+  .tool-row span{display:block;font-size:12px;color:var(--faint);}
+
+  /* case study sections */
+  .case-head{display:flex;align-items:center;gap:16px;margin-bottom:14px;}
+  .case-logo{width:56px;height:56px;border-radius:12px;overflow:hidden;background:var(--card);flex:none;}
+  .case-logo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .case-name{font-size:32px;font-weight:900;margin:0;letter-spacing:-0.01em;}
+  .case-desc{font-size:15px;color:var(--sub);line-height:1.6;max-width:900px;margin:0 0 32px;border-bottom:1px solid var(--line);padding-bottom:32px;}
+
+  .cards-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;}
+  .cards-row.single{grid-template-columns:1fr;max-width:540px;}
+  .cand-card{background:var(--card);border-radius:16px;padding:22px;display:flex;gap:18px;align-items:center;}
+  .cand-photo{width:88px;height:88px;border-radius:50%;overflow:hidden;flex:none;background:#ddd;}
+  .cand-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .cand-info h4{font-size:19px;margin:0 0 2px;}
+  .cand-role{font-size:14px;color:var(--sub);margin:0 0 10px;}
+  .cand-bullets{list-style:none;margin:0 0 8px;padding:0;font-size:13px;color:#333;}
+  .cand-bullets li{position:relative;padding-left:14px;margin-bottom:3px;}
+  .cand-bullets li::before{content:"•";position:absolute;left:0;color:var(--faint);}
+  .cand-link{font-size:12.5px;color:var(--faint);text-decoration:none;}
+  .cand-link:hover{text-decoration:underline;color:var(--sub);}
+
+  .co-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .co-grid.stacked{grid-template-columns:1fr;max-width:600px;}
+  .co-col h5.minor{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:0 0 12px;}
+  .co-col p{font-size:14.5px;line-height:1.65;color:#333;margin:0 0 14px;}
+  .co-col p:last-child{margin-bottom:0;}
+
+  .dual{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  .dual-col .co-col{margin-top:24px;}
+
+  /* sherpas numbers panel */
+  .sherpas-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;}
+  .numbers-box{}
+  .numbers-head{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin:0 0 16px;}
+  .num-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);padding:18px 0;}
+  .num-item{padding-right:20px;}
+  .num-item .n{font-size:30px;font-weight:900;line-height:1;}
+  .num-item .l{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--faint);margin-top:6px;}
+  .num-bar-row{border-top:1px solid var(--line);padding:16px 0;display:grid;grid-template-columns:70px 1fr;align-items:center;gap:16px;}
+  .num-bar-row .n{font-size:26px;font-weight:900;}
+  .num-bar-row .l{font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
+  .bar-track{height:8px;background:var(--line);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--ink);border-radius:4px;}
+
+  /* footer */
+  footer{padding:48px 0 70px;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--faint);}
+  footer a{text-decoration:none;color:var(--sub);}
+  footer a:hover{text-decoration:underline;}
+
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr;gap:28px;}
+    .hero-photo{width:140px;height:140px;}
+    .hero-name{font-size:38px;}
+    .stats{grid-template-columns:1fr 1fr;row-gap:20px;}
+    .stat{border-right:none;border-bottom:1px solid var(--line);padding-bottom:16px;}
+    .exp-grid{grid-template-columns:1fr;}
+    .profiles-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr 1fr;}
+    .cards-row{grid-template-columns:1fr;}
+    .co-grid{grid-template-columns:1fr;}
+    .dual{grid-template-columns:1fr;gap:0;}
+    .sherpas-grid{grid-template-columns:1fr;}
+    .num-row{grid-template-columns:1fr 1fr;}
+    section{padding:48px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">Matthieu Chaffanjon</a>
+    <div class="navlinks">
+      <a href="#expertise">Expertise</a>
+      <a href="#whitecircle">White&nbsp;Circle</a>
+      <a href="#qwant">Qwant</a>
+      <a href="#presti">Presti&nbsp;&amp;&nbsp;Lifen</a>
+      <a href="#swaap">Swaap&nbsp;Labs</a>
+      <a href="#hector">Hector</a>
+      <a href="#sherpas">Les&nbsp;Sherpas</a>
+    </div>
+  </div>
+</nav>
+
+<div id="top" class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-bottom:1px solid var(--line);">
+    <div class="hero-photo"><img src="assets/matthieu.jpg" alt="Matthieu Chaffanjon"></div>
+    <div>
+      <h1 class="hero-name">Matthieu<br>Chaffanjon</h1>
+      <p class="hero-title">AI Research &amp; Engineering Talent</p>
+      <p class="hero-desc">Full-cycle recruiter specializing in AI research &amp; engineering talent. Built my expertise as Head of the Data/AI practice at Lity, before going fully independent with Bluecoders. I've supported hiring at 50+ tech companies and placed 35+ top profiles on permanent contracts. Now at Axiōma Search, an independent recruitment firm, I partner with multiple ambitious AI companies at once on senior hires across Paris, London, New York and San Francisco.</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-logo"><img src="assets/lity.jpg" alt="Lity"></div>
+          <div><p class="tl-name">Lity</p><p class="tl-date">2023 – 2025</p></div>
+        </div>
+        <span class="tl-arrow">→</span>
+        <div class="tl-item">
+          <div class="tl-logo"><img src="assets/bluecoders.jpg" alt="Bluecoders"></div>
+          <div><p class="tl-name">Bluecoders</p><p class="tl-date">2025 – 2026</p></div>
+        </div>
+        <span class="tl-arrow">→</span>
+        <div class="tl-item">
+          <div class="tl-logo"><img src="assets/axioma.jpg" alt="Axiōma Search"></div>
+          <div><p class="tl-name">Axiōma Search</p><p class="tl-date">2026 – Present</p></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-num">Full-cycle</div><div class="stat-label">Sourcing to closing</div></div>
+        <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Partner companies</div></div>
+        <div class="stat"><div class="stat-num">35+</div><div class="stat-label">Profiles placed</div></div>
+        <div class="stat"><div class="stat-num">4 weeks</div><div class="stat-label">Median time to fill</div></div>
+      </div>
+
+      <div class="contact-row">
+        <span>
+          <a href="mailto:matthieu.chaff@gmail.com">matthieu.chaff@gmail.com</a> ·
+          +33 6 79 22 07 97 ·
+          <a href="https://www.linkedin.com/in/matthieu-chaffanjon-a3568a98/" target="_blank" rel="noopener">linkedin.com/in/matthieu-chaffanjon-a3568a98</a> ·
+          Paris, France
+        </span>
+        <span>Selected placements — non-exhaustive</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section id="expertise">
+    <p class="eyebrow">Expertise</p>
+    <h2 class="sec-title">Recruiting technical talent for AI companies</h2>
+    <p class="sec-sub">I understand the AI stack in depth, and recruit across the full range of roles that build it — from research to data to product engineering.</p>
+
+    <div class="exp-grid">
+      <div class="exp-col">
+        <h3 class="minor">The model lifecycle</h3>
+        <div class="lifecycle-item">
+          <div class="lc-head"><span class="lc-num">01</span><h4 class="lc-title">Pre-training</h4></div>
+          <p class="lc-desc">Data curation, large-scale distributed training, scaling laws.</p>
+        </div>
+        <div class="lifecycle-item">
+          <div class="lc-head"><span class="lc-num">02</span><h4 class="lc-title">Post-training</h4></div>
+          <p class="lc-desc">Fine-tuning, preference optimization, RL, reasoning, safety.</p>
+        </div>
+        <div class="lifecycle-item">
+          <div class="lc-head"><span class="lc-num">03</span><h4 class="lc-title">Inference</h4></div>
+          <p class="lc-desc">Quantization, distillation, kernels, serving at low latency and cost.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">LLMs</span>
+          <span class="tag">Evaluations &amp; model behaviour</span>
+          <span class="tag">Multimodal &amp; computer vision</span>
+          <span class="tag">Agentic systems</span>
+          <span class="tag">Data pipelines</span>
+          <span class="tag">ML infrastructure</span>
+        </div>
+      </div>
+
+      <div class="exp-col">
+        <h3 class="minor">Four core profiles</h3>
+        <div class="profiles-grid">
+          <div class="profile-card">
+            <h4>Research Scientist</h4>
+            <p>Frames the research problem, designs the experiments and pushes the state of the art. Usually PhD-level, coming from top labs or academia.</p>
+          </div>
+          <div class="profile-card">
+            <h4>Data Engineer</h4>
+            <p>Designs and builds the pipelines and infrastructure that move, store and clean data reliably at scale, so the rest of the company can trust it.</p>
+          </div>
+          <div class="profile-card">
+            <h4>Data Scientist</h4>
+            <p>Turns data into decisions: statistical analysis, experimentation and models that directly inform product and business choices.</p>
+          </div>
+          <div class="profile-card">
+            <h4>Software &amp; Product Engineer</h4>
+            <p>Ships the product itself, backend or frontend — from versatile early engineers who own a feature end to end, to specialists on a mature stack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="lc-num">01</span>
+        <h4>Beyond keywords</h4>
+        <p>I'm curious about the actual work — publications, open-source projects, models — not just titles and company names.</p>
+      </div>
+      <div class="why-item">
+        <span class="lc-num">02</span>
+        <h4>Passive talent</h4>
+        <p>I approach researchers who aren't looking, and explain why the problem is technically worth their time.</p>
+      </div>
+      <div class="why-item">
+        <span class="lc-num">03</span>
+        <h4>Trusted advisor</h4>
+        <p>I work with founders and research leads to sharpen the profile as priorities evolve, from pre-seed to Series B.</p>
+      </div>
+      <div class="tools">
+        <h4 class="minor">Tools I master</h4>
+        <div class="tool-row">
+          <div class="tool-logo"><img src="assets/ashby.jpg" alt="Ashby"></div>
+          <div><strong>Ashby</strong><span>ATS &amp; structured hiring</span></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-logo"><img src="assets/linkedin-recruiter.jpg" alt="LinkedIn Recruiter"></div>
+          <div><strong>LinkedIn Recruiter</strong><span>Sourcing</span></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-logo"><img src="assets/notion.jpg" alt="Notion"></div>
+          <div><strong>Notion</strong><span>Workspace &amp; pipeline</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHITE CIRCLE -->
+  <section id="whitecircle">
+    <div class="case-head">
+      <div class="case-logo"><img src="assets/whitecircle.jpg" alt="White Circle"></div>
+      <h2 class="case-name">White Circle</h2>
+    </div>
+    <p class="case-desc">AI safety company building the safety, reliability and optimization layer for AI systems. $11M raised from top funds, founders and senior leaders at OpenAI, Anthropic, Hugging Face, Mistral and DeepMind.</p>
+
+    <div class="cards-row">
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/mohamed.jpg" alt="Mohamed Mekkouri"></div>
+        <div class="cand-info">
+          <h4>Mohamed Mekkouri</h4>
+          <p class="cand-role">ML Researcher</p>
+          <ul class="cand-bullets">
+            <li>Placed in 5 weeks</li>
+            <li>Trial period passed · 7–8 months in</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/mohamed-mekkouri" target="_blank" rel="noopener">linkedin.com/in/mohamed-mekkouri</a>
+        </div>
+      </div>
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/benjamin.jpg" alt="Benjamin Sicard"></div>
+        <div class="cand-info">
+          <h4>Benjamin Sicard</h4>
+          <p class="cand-role">Senior Data Engineer</p>
+          <ul class="cand-bullets">
+            <li>Placed in 3 weeks</li>
+            <li>Trial period passed · 7–8 months in</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/benjaminsicard" target="_blank" rel="noopener">linkedin.com/in/benjaminsicard</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-grid">
+      <div class="co-col">
+        <h5 class="minor">Context</h5>
+        <p>In December 2025, White Circle's Head of Ops, Igor, reached out looking for a recruitment partner to help staff critical AI and Data roles as the company scaled rapidly after its seed round.</p>
+        <p>The product: natural-language policies that define what an AI model should and shouldn't do, tested and enforced automatically at scale. The team also published CircleGuardBench, a benchmark for LLM guardrails.</p>
+      </div>
+      <div class="co-col">
+        <h5 class="minor">Outcome</h5>
+        <p>I took ownership of two senior searches at the same time — ML Research and Data Engineering — in a fast-paced, international and demanding environment.</p>
+        <p>Benjamin, Senior Data Engineer, came from Fipto and was placed in 3 weeks. Mohamed, ML Researcher, came from Hugging Face with a Centrale Paris background and was placed in 5 weeks. Both passed their trial period and are still there 7–8 months later. CEO Denis Shilov expressed strong satisfaction with the quality and speed of delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QWANT -->
+  <section id="qwant">
+    <div class="case-head">
+      <div class="case-logo"><img src="assets/qwant.jpg" alt="Qwant"></div>
+      <h2 class="case-name">Qwant</h2>
+    </div>
+    <p class="case-desc">Europe's leading privacy-first search engine, headquartered in Paris. Building its own web index with Ecosia (European Search Perspective) and Staan, a search API that gives LLMs and AI products access to fresh web data. Default search engine of the European Parliament (June 2026) and the French government.</p>
+
+    <div class="cards-row">
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/matyas.jpg" alt="Matyas Amrouche"></div>
+        <div class="cand-info">
+          <h4>Matyas Amrouche</h4>
+          <p class="cand-role">Applied Scientist</p>
+          <ul class="cand-bullets">
+            <li>Placed in 4 weeks</li>
+            <li>Still at Qwant · almost 3 years</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/matyas-amrouche" target="_blank" rel="noopener">linkedin.com/in/matyas-amrouche</a>
+        </div>
+      </div>
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/axel.jpg" alt="Axel Durand"></div>
+        <div class="cand-info">
+          <h4>Axel Durand</h4>
+          <p class="cand-role">Data Scientist</p>
+          <ul class="cand-bullets">
+            <li>Placed in 4 weeks</li>
+            <li>2+ years at Qwant</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/axel-durand" target="_blank" rel="noopener">linkedin.com/in/axel-durand</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-grid">
+      <div class="co-col">
+        <h5 class="minor">Context</h5>
+        <p>I approached Qwant's hiring team proactively, sending Matyas's anonymized profile directly by email. He was hired shortly after, which is a rare outcome for a proactive approach.</p>
+        <p>About the searches: Qwant is a web-scale search engine turning into a search-technology company. It moves from external search providers to its own retrieval and ranking stack, and experiments with LLM-generated answers. The profiles sit in information retrieval: dense and hybrid retrieval, ranking, query understanding and LLM fine-tuning for relevance.</p>
+      </div>
+      <div class="co-col">
+        <h5 class="minor">Outcome</h5>
+        <p>I was then entrusted with a second, more specific search for a Data Scientist, which led to Axel's placement. I worked closely with CTO Laurent Ach on both searches, from sourcing through to closing.</p>
+        <p>Matyas works on retrieval and ranking systems on Vespa, including multimodal retrieval. Axel worked on query understanding and on fine-tuning LLMs for search relevance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESTI & LIFEN -->
+  <section id="presti">
+    <div class="dual">
+      <div class="dual-col">
+        <div class="case-head">
+          <div class="case-logo"><img src="assets/presti.jpg" alt="Presti AI"></div>
+          <h2 class="case-name">Presti AI</h2>
+        </div>
+        <p class="case-desc" style="border-bottom:none;padding-bottom:0;">Y Combinator S24 — generative AI for furniture product visuals. $3.5M seed from Partech &amp; YC, 400+ furniture clients. Founded by engineers from Uber, BCG X and Scibids.</p>
+
+        <div class="cards-row single">
+          <div class="cand-card">
+            <div class="cand-photo"><img src="assets/antonin.jpg" alt="Antonin Gay"></div>
+            <div class="cand-info">
+              <h4>Antonin Gay</h4>
+              <p class="cand-role">Founding AI Scientist</p>
+              <ul class="cand-bullets">
+                <li>Placed in 4 weeks</li>
+                <li>Still at Presti · ~2 years</li>
+              </ul>
+              <a class="cand-link" href="https://linkedin.com/in/antonin-gay" target="_blank" rel="noopener">linkedin.com/in/antonin-gay</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="co-col">
+          <p>Presti builds computer-vision and generative models specialized for furniture: transformer-based diffusion models, initially built on Stable Diffusion XL and fine-tuned on 75K+ furniture photos, turn a single product shot into lifestyle imagery, with realistic shadows and added accessories.</p>
+          <p>For the AI Scientist role, Presti needed a high-caliber researcher with a PhD in Computer Vision and a genuine startup mindset. I identified Antonin — a rare profile combining deep academic expertise with hands-on product orientation. The position was filled in 4 weeks.</p>
+        </div>
+      </div>
+
+      <div class="dual-col">
+        <div class="case-head">
+          <div class="case-logo"><img src="assets/lifen.jpg" alt="Lifen"></div>
+          <h2 class="case-name">Lifen</h2>
+        </div>
+        <p class="case-desc" style="border-bottom:none;padding-bottom:0;">French HealthTech leader in medical-data interoperability — €50M raised (Partech, Serena). 800+ healthcare establishments, AI-powered structuring of clinical data.</p>
+
+        <div class="cards-row single">
+          <div class="cand-card">
+            <div class="cand-photo"><img src="assets/agathe.jpg" alt="Agathe Raymond Carlo"></div>
+            <div class="cand-info">
+              <h4>Agathe Raymond Carlo</h4>
+              <p class="cand-role">Software Engineer</p>
+              <ul class="cand-bullets">
+                <li>Placed in 6 weeks</li>
+                <li>Still at Lifen · ~2 years</li>
+              </ul>
+              <a class="cand-link" href="https://linkedin.com/in/agathe-raymond-carlo" target="_blank" rel="noopener">linkedin.com/in/agathe-raymond-carlo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="co-col">
+          <p>Lifen connects hospital information systems to the outside world (MSSanté, shared patient records) and builds AI models that extract and structure clinical data from medical documents. It created the FHIR France meetup.</p>
+          <p>Full-stack developer search (Python/FastAPI, React/TypeScript) within a long-term recruitment partnership. Placed during my time at Lity — a long-standing relationship. Position filled in 6 weeks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SWAAP LABS -->
+  <section id="swaap">
+    <div class="case-head">
+      <div class="case-logo"><img src="assets/swaap.jpg" alt="Swaap Labs"></div>
+      <h2 class="case-name">Swaap Labs</h2>
+    </div>
+    <p class="case-desc">Decentralized finance protocol — market-neutral AMM combining quantitative market-making models with on-chain execution (Chainlink price feeds), live on Ethereum, Arbitrum and Polygon. $4.5M seed from Signature Ventures, Kima Ventures (Xavier Niel), and top Web3 angels. Partners include Lido and Aave.</p>
+
+    <div class="cards-row">
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/pierre.jpg" alt="Pierre Roullon"></div>
+        <div class="cand-info">
+          <h4>Pierre Roullon</h4>
+          <p class="cand-role">Senior Software Engineer</p>
+          <ul class="cand-bullets">
+            <li>Placed in 3 weeks</li>
+            <li>Still at Swaap Labs · ~2 years</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/proullon" target="_blank" rel="noopener">linkedin.com/in/proullon</a>
+        </div>
+      </div>
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/julien.jpg" alt="Julien Loudet"></div>
+        <div class="cand-info">
+          <h4>Julien Loudet</h4>
+          <p class="cand-role">Senior Software Engineer</p>
+          <ul class="cand-bullets">
+            <li>Placed in 4 weeks</li>
+            <li>Still at Swaap Labs · ~1.5 years</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/jldt" target="_blank" rel="noopener">linkedin.com/in/jldt</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-grid">
+      <div class="co-col">
+        <h5 class="minor">Context</h5>
+        <p>Swaap Labs was an existing partner from my time at Lity, and I continued the relationship.</p>
+        <p>The team works with leading market-making researchers, and its contracts are audited (ChainSecurity, Quantstamp). It needed senior Rust engineers for the core: low-latency backend services that interact with the on-chain ecosystem and work hand in hand with the research team on optimization problems.</p>
+      </div>
+      <div class="co-col">
+        <h5 class="minor">Outcome</h5>
+        <p>The first candidate I found, Pierre, was presented directly to the client and hired — placed in 3 weeks. He brings an infrastructure and continuous-delivery background (OVH, Veepee). The placement built direct trust with CEO David Bouba.</p>
+        <p>Six months later, David came back to me for a second hire: Julien, a Rust specialist with a PhD who previously built the Zenoh-Flow data-flow framework in Rust — placed in 4 weeks. Proof of a lasting partnership.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HECTOR -->
+  <section id="hector">
+    <div class="case-head">
+      <div class="case-logo"><img src="assets/hector.jpg" alt="Hector"></div>
+      <h2 class="case-name">Hector</h2>
+    </div>
+    <p class="case-desc">Fintech early-stage startup that entrusted Bluecoders with the recruitment of its founding core team.</p>
+
+    <div class="cards-row">
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/jeremy.jpg" alt="Jérémy Lefebvre"></div>
+        <div class="cand-info">
+          <h4>Jérémy Lefebvre</h4>
+          <p class="cand-role">Lead Designer</p>
+          <ul class="cand-bullets">
+            <li>Placed in 6 weeks</li>
+            <li>Just started</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/lefebvrejeremy" target="_blank" rel="noopener">linkedin.com/in/lefebvrejeremy</a>
+        </div>
+      </div>
+      <div class="cand-card">
+        <div class="cand-photo"><img src="assets/loris.jpg" alt="Loris Thiebaut"></div>
+        <div class="cand-info">
+          <h4>Loris Thiebaut</h4>
+          <p class="cand-role">Security Engineer</p>
+          <ul class="cand-bullets">
+            <li>Placed in 3 weeks</li>
+            <li>Just started</li>
+          </ul>
+          <a class="cand-link" href="https://linkedin.com/in/loris-thiebaut" target="_blank" rel="noopener">linkedin.com/in/loris-thiebaut</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-grid">
+      <div class="co-col">
+        <h5 class="minor">Context</h5>
+        <p>Hector mandated Bluecoders for hires it found difficult to staff: a Lead Designer and a Security Engineer, both urgent hires for the founding core team. The company is still in stealth mode, so I can't share all the details.</p>
+      </div>
+      <div class="co-col">
+        <h5 class="minor">Outcome</h5>
+        <p>Design and cybersecurity sit well outside my usual AI/Data scope, and I had never recruited for these roles before. The mandate was demanding, but I found strong candidates quickly: Loris was placed in 3 weeks, Jérémy in 6.</p>
+        <p>Proof of adaptability across hiring domains.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES SHERPAS -->
+  <section id="sherpas">
+    <div class="case-head">
+      <div class="case-logo"><img src="assets/sherpas.jpg" alt="Les Sherpas"></div>
+      <h2 class="case-name">Les Sherpas</h2>
+    </div>
+    <p class="case-desc">Leading French EdTech — a tutoring marketplace connecting 40K+ families with 4K+ certified teachers, plus a content arm reaching 4M+ monthly readers. Elected Brand of the Year 2026. Founded at Station F.</p>
+
+    <div class="sherpas-grid">
+      <div>
+        <div class="cards-row single" style="margin-bottom:28px;">
+          <div class="cand-card">
+            <div class="cand-photo"><img src="assets/loup.jpg" alt="Loup Peluso"></div>
+            <div class="cand-info">
+              <h4>Loup Peluso</h4>
+              <p class="cand-role">CTO</p>
+              <ul class="cand-bullets">
+                <li>Placed in 6 weeks</li>
+                <li>Still at Les Sherpas · 1+ year</li>
+              </ul>
+              <a class="cand-link" href="https://linkedin.com/in/loup-peluso" target="_blank" rel="noopener">linkedin.com/in/loup-peluso</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="co-col" style="margin-bottom:24px;">
+          <h5 class="minor">Context</h5>
+          <p>Les Sherpas needed an urgent CTO replacement. I worked in close collaboration with CEO Étienne Porche throughout the search, with near day-to-day phone follow-up.</p>
+        </div>
+        <div class="co-col">
+          <h5 class="minor">Outcome</h5>
+          <p>A rigorous six-step interview process, followed closely on my side across roughly 30 interviews. Loup came out as the best profile among the candidates I presented.</p>
+          <p>I followed the process all the way through to the negotiation: the offer was negotiated and closed, and accepted within 24 hours.</p>
+        </div>
+      </div>
+
+      <div class="numbers-box">
+        <p class="numbers-head">The search in numbers</p>
+        <div class="num-row">
+          <div class="num-item"><div class="n">6 weeks</div><div class="l">Time to fill</div></div>
+          <div class="num-item"><div class="n">24h</div><div class="l">Offer accepted after negotiation</div></div>
+        </div>
+        <div class="num-bar-row">
+          <div><div class="n">~60</div></div>
+          <div><div class="l">Candidates screened</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+        </div>
+        <div class="num-bar-row">
+          <div><div class="n">20</div></div>
+          <div><div class="l">Qualified by phone</div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div></div>
+        </div>
+        <div class="num-bar-row">
+          <div><div class="n">9</div></div>
+          <div><div class="l">Sent to the client</div><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div></div>
+        </div>
+        <div class="num-row">
+          <div class="num-item"><div class="n">~30</div><div class="l">Interviews followed</div></div>
+          <div class="num-item"><div class="n">Day-to-day</div><div class="l">Phone follow-up with the CEO</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Matthieu Chaffanjon · Portfolio</span>
+    <span><a href="mailto:matthieu.chaff@gmail.com">matthieu.chaff@gmail.com</a> · <a href="https://www.linkedin.com/in/matthieu-chaffanjon-a3568a98/" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
