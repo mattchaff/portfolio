@@ -50,6 +50,13 @@
   }
   .nav-linkedin svg{display:block;}
   .nav-linkedin:hover{opacity:1;}
+  .nav-right{display:flex;align-items:center;gap:16px;}
+  .nav-cv{
+    font-size:13px;font-weight:700;color:var(--ink);text-decoration:none;
+    padding:5px 12px;border:1px solid var(--ink);border-radius:6px;line-height:1;
+    transition:background 0.15s,color 0.15s;
+  }
+  .nav-cv:hover{background:var(--ink);color:#fff;}
   .navlinks{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;}
   .navlinks::-webkit-scrollbar{display:none;}
   .navlinks a{
@@ -212,11 +219,14 @@
 <nav class="topnav">
   <div class="topnav-inner">
     <a class="brand" href="#top">Matthieu Chaffanjon</a>
-    <a class="nav-linkedin" href="https://www.linkedin.com/in/matthieu-chaffanjon-a3568a98/" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="#fff">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>
-      </svg>
-    </a>
+    <div class="nav-right">
+      <a class="nav-cv" href="assets/Matthieu_Chaffanjon_CV.pdf" target="_blank" rel="noopener">CV</a>
+      <a class="nav-linkedin" href="https://www.linkedin.com/in/matthieu-chaffanjon-a3568a98/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </nav>
 
