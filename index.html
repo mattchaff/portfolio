@@ -12,15 +12,15 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0a0a0a;
-    --panel:#111111;
-    --text:#ececec;
+    --bg:#1c1c1d;
+    --panel:#232324;
+    --text:#e8e8e8;
     --muted:#9a9a9a;
     --faint:#6b6b6b;
-    --line:#262626;
+    --line:#333334;
     --max:760px;
   }
   *{box-sizing:border-box;}
@@ -29,7 +29,7 @@
     margin:0;
     background:var(--bg);
     color:var(--text);
-    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-family:"Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
     line-height:1.5;
   }
@@ -82,10 +82,12 @@
   tbody tr:last-child td{border-bottom:none;}
   .cand a{color:var(--text);text-decoration:none;font-weight:600;border-bottom:1px solid var(--faint);}
   .cand a:hover{border-bottom-color:var(--text);}
-  .role-co{color:#bdbdbd;}
-  .role-co .co{color:var(--muted);}
+  .role{color:#bdbdbd;}
   .ttf{color:#bdbdbd;white-space:nowrap;}
-  .status{color:var(--muted);white-space:nowrap;}
+  .company{white-space:nowrap;}
+  .company a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;}
+  .company a:hover{color:var(--text);border-bottom-color:var(--text);}
+  .company span{color:var(--muted);}
 
   footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);}
 
@@ -101,9 +103,9 @@
     tbody td{display:block;border-bottom:none;padding:2px 0;}
     tbody td:last-child{text-align:left;}
     .cand{font-size:14.5px;margin-bottom:2px;}
-    .role-co{font-size:13px;}
+    .role{font-size:13px;}
     .ttf::before{content:"Time to fill: ";color:var(--faint);}
-    .status::before{content:"";}
+    .company::before{content:"";}
   }
 </style>
 </head>
@@ -140,74 +142,74 @@
     <h2>Selected Placements</h2>
     <table>
       <thead>
-        <tr><th>Candidate</th><th>Role</th><th>Time to fill</th><th>Status</th></tr>
+        <tr><th>Candidate</th><th>Role</th><th>Time to fill</th><th>Company</th></tr>
       </thead>
       <tbody>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/mohamed-mekkouri" target="_blank" rel="noopener">Mohamed Mekkouri</a></td>
-          <td class="role-co">ML Researcher <span class="co">— White Circle</span></td>
+          <td class="role">ML Researcher</td>
           <td class="ttf">5 weeks</td>
-          <td class="status">Trial passed · 7–8 mo in</td>
+          <td class="company"><a href="https://whitecircle.ai" target="_blank" rel="noopener">White Circle</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/benjaminsicard" target="_blank" rel="noopener">Benjamin Sicard</a></td>
-          <td class="role-co">Senior Data Engineer <span class="co">— White Circle</span></td>
+          <td class="role">Senior Data Engineer</td>
           <td class="ttf">3 weeks</td>
-          <td class="status">Trial passed · 7–8 mo in</td>
+          <td class="company"><a href="https://whitecircle.ai" target="_blank" rel="noopener">White Circle</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/matyas-amrouche" target="_blank" rel="noopener">Matyas Amrouche</a></td>
-          <td class="role-co">Applied Scientist <span class="co">— Qwant</span></td>
+          <td class="role">Applied Scientist</td>
           <td class="ttf">4 weeks</td>
-          <td class="status">Still there · ~3 yrs</td>
+          <td class="company"><a href="https://www.qwant.com" target="_blank" rel="noopener">Qwant</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/axel-durand" target="_blank" rel="noopener">Axel Durand</a></td>
-          <td class="role-co">Data Scientist <span class="co">— Qwant</span></td>
+          <td class="role">Data Scientist</td>
           <td class="ttf">4 weeks</td>
-          <td class="status">Still there · 2+ yrs</td>
+          <td class="company"><a href="https://www.qwant.com" target="_blank" rel="noopener">Qwant</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/antonin-gay" target="_blank" rel="noopener">Antonin Gay</a></td>
-          <td class="role-co">Founding AI Scientist <span class="co">— Presti AI</span></td>
+          <td class="role">Founding AI Scientist</td>
           <td class="ttf">4 weeks</td>
-          <td class="status">Still there · ~2 yrs</td>
+          <td class="company"><a href="https://www.presti.ai" target="_blank" rel="noopener">Presti AI</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/agathe-raymond-carlo" target="_blank" rel="noopener">Agathe Raymond Carlo</a></td>
-          <td class="role-co">Software Engineer <span class="co">— Lifen</span></td>
+          <td class="role">Software Engineer</td>
           <td class="ttf">6 weeks</td>
-          <td class="status">Still there · ~2 yrs</td>
+          <td class="company"><a href="https://www.lifen.com" target="_blank" rel="noopener">Lifen</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/proullon" target="_blank" rel="noopener">Pierre Roullon</a></td>
-          <td class="role-co">Senior Software Engineer <span class="co">— Swaap Labs</span></td>
+          <td class="role">Senior Software Engineer</td>
           <td class="ttf">3 weeks</td>
-          <td class="status">Still there · ~2 yrs</td>
+          <td class="company"><a href="https://www.swaap.finance" target="_blank" rel="noopener">Swaap Labs</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/jldt" target="_blank" rel="noopener">Julien Loudet</a></td>
-          <td class="role-co">Senior Software Engineer <span class="co">— Swaap Labs</span></td>
+          <td class="role">Senior Software Engineer</td>
           <td class="ttf">4 weeks</td>
-          <td class="status">Still there · ~1.5 yrs</td>
+          <td class="company"><a href="https://www.swaap.finance" target="_blank" rel="noopener">Swaap Labs</a></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/lefebvrejeremy" target="_blank" rel="noopener">Jérémy Lefebvre</a></td>
-          <td class="role-co">Lead Designer <span class="co">— Hector</span></td>
+          <td class="role">Lead Designer</td>
           <td class="ttf">6 weeks</td>
-          <td class="status">Just started</td>
+          <td class="company"><span>Hector</span></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/loris-thiebaut" target="_blank" rel="noopener">Loris Thiebaut</a></td>
-          <td class="role-co">Security Engineer <span class="co">— Hector</span></td>
+          <td class="role">Security Engineer</td>
           <td class="ttf">3 weeks</td>
-          <td class="status">Just started</td>
+          <td class="company"><span>Hector</span></td>
         </tr>
         <tr>
           <td class="cand"><a href="https://linkedin.com/in/loup-peluso" target="_blank" rel="noopener">Loup Peluso</a></td>
-          <td class="role-co">CTO <span class="co">— Les Sherpas</span></td>
+          <td class="role">CTO</td>
           <td class="ttf">6 weeks</td>
-          <td class="status">Still there · 1+ yr</td>
+          <td class="company"><a href="https://sherpas.com" target="_blank" rel="noopener">Les Sherpas</a></td>
         </tr>
       </tbody>
     </table>
