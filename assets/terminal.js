@@ -350,7 +350,7 @@
 
   function cmdFun() {
     print({ cls: 'tm-ok', text: 'could have been a developer' });
-    print('15 years ago I was one of the first people jailbreaking iPod Touches. I could have become a developer. Then I tore my cruciate ligaments in a merge conflict, and now I hire them instead.');
+    print('15 years ago I was one of the first people jailbreaking iPod Touches. I could have become a developer. Then I tore the cruciate ligaments in both index fingers. Career-ending injury for a developer. Now I recruit them instead.');
     blank();
     print({ cls: 'tm-ok', text: 'a past life in music' });
     print('I made music. Rap instrumentals mostly. Sometimes I sang on them too. Tracklist: [REDACTED] (confidentiality).');
