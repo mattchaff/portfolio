@@ -84,13 +84,56 @@
   tbody tr:last-child td{border-bottom:none;}
   .cand a{color:var(--text);text-decoration:none;font-weight:600;border-bottom:1px solid var(--faint);}
   .cand a:hover{border-bottom-color:var(--text);}
-  .role{color:#bdbdbd;font-size:13.5px;}
+  td.role{color:#bdbdbd;font-size:13.5px;}
   .company{white-space:nowrap;}
   .company a{color:var(--text);text-decoration:none;border-bottom:1px solid transparent;}
   .company a:hover{color:var(--text);border-bottom-color:var(--text);}
   .company span{color:var(--text);}
 
   footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--text);}
+
+  /* subtle animations */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  @keyframes blink{50%{opacity:0;}}
+  .intro h1,.intro p.role,.bio,.linkrow,.placements h2,thead,tbody tr,footer{
+    animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .intro h1{animation-delay:.05s;}
+  .intro p.role{animation-delay:.12s;}
+  .bio{animation-delay:.19s;}
+  .linkrow{animation-delay:.26s;}
+  .placements h2{animation-delay:.34s;}
+  thead{animation-delay:.38s;}
+  tbody tr{animation-delay:calc(.42s + var(--i,0) * .04s);}
+  tbody tr:nth-child(1){--i:0;} tbody tr:nth-child(2){--i:1;} tbody tr:nth-child(3){--i:2;}
+  tbody tr:nth-child(4){--i:3;} tbody tr:nth-child(5){--i:4;} tbody tr:nth-child(6){--i:5;}
+  tbody tr:nth-child(7){--i:6;} tbody tr:nth-child(8){--i:7;} tbody tr:nth-child(9){--i:8;}
+  tbody tr:nth-child(10){--i:9;} tbody tr:nth-child(11){--i:10;}
+  footer{animation-delay:.95s;}
+
+  /* rotating word in subtitle */
+  .mbr{display:none;}
+  .rot.typing::after{
+    content:"";display:inline-block;width:1px;height:1em;background:currentColor;
+    margin-left:2px;vertical-align:-2px;animation:blink 1s steps(1) infinite;
+  }
+
+  /* row hover (pointer devices only) */
+  @media (hover:hover){
+    tbody td{transition:border-color .2s ease,color .2s ease;}
+    tbody tr:hover td{border-bottom-color:#4a4a4b;}
+    tbody tr:hover td.role{color:var(--text);}
+    .cand::after{
+      content:"\2197";display:inline-block;margin-left:6px;font-size:12px;font-weight:400;
+      color:var(--muted);opacity:0;transform:translate(-4px,2px);
+      transition:opacity .2s ease,transform .2s ease;
+    }
+    tbody tr:hover .cand::after{opacity:1;transform:none;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+  }
 
   @media (max-width:560px){
     .wrap{padding:40px 18px 60px;}
@@ -104,7 +147,9 @@
     tbody td{display:block;border-bottom:none;padding:2px 0;}
     tbody td:last-child{text-align:left;}
     .cand{font-size:14.5px;margin-bottom:2px;}
-    .role{font-size:13px;}
+    td.role{font-size:13px;}
+    .intro p.role .sep{display:none;}
+    .intro p.role .mbr{display:inline;}
   }
 </style>
 </head>
@@ -116,7 +161,7 @@
     <img class="avatar" src="assets/matthieu.jpg" alt="Matthieu Chaffanjon">
     <div>
       <h1>Matthieu Chaffanjon</h1>
-      <p class="role">Senior Tech Recruiter — AI Research &amp; Engineering Talent</p>
+      <p class="role">Senior Tech Recruiter<span class="sep"> — </span><br class="mbr">AI <span id="rot" class="rot">Research &amp; Engineering</span> Talent</p>
       <p class="bio">Senior Tech Recruiter specialised in AI Research and Engineering hiring. I led the Data/AI practice at <a href="https://lity.so" target="_blank" rel="noopener">Lity</a>, then independent with <a href="https://bluecoders.com" target="_blank" rel="noopener">Bluecoders</a> and <a href="https://www.axiomasearch.com/" target="_blank" rel="noopener">Axioma Search</a>. Direct partnership with founders, CTOs and hiring managers. Strong sales skills with 30+ key accounts opened.</p>
       <div class="linkrow">
         <a href="mailto:matthieu.chaff@gmail.com">
@@ -205,6 +250,32 @@
 
 </div>
 
+<script>
+(function(){
+  var el=document.getElementById('rot');
+  if(!el||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+  var words=['Research','Engineering','Data'],i=0,text=el.textContent;
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+  async function erase(){
+    el.classList.add('typing');
+    while(text.length){text=text.slice(0,-1);el.textContent=text;await sleep(35);}
+  }
+  async function type(w){
+    for(var k=1;k<=w.length;k++){text=w.slice(0,k);el.textContent=text;await sleep(70);}
+    el.classList.remove('typing');
+  }
+  (async function loop(){
+    await sleep(2400);
+    while(true){
+      await erase();
+      await sleep(250);
+      await type(words[i%words.length]);
+      i++;
+      await sleep(2400);
+    }
+  })();
+})();
+</script>
 <script data-goatcounter="https://mattchaff96.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
