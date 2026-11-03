@@ -329,14 +329,14 @@
     { k: 'lynch', label: 'favorite Lynch film', val: 'Lost Highway' },
     { k: 'series', label: 'favorite series', val: 'Twin Peaks', note: "Try 'coffee'." },
     { k: 'game', label: 'favorite video game', val: 'Skyrim', note: "I used to be a recruiter like you, then I took an arrow to the knee." },
-    { k: 'country', label: 'best country visited', val: 'Peru' }
+    { k: 'country', label: 'favorite visited country', val: 'Peru' }
   ];
 
   function cmdFavorites(arg) {
     var a = norm(arg);
     if (a) {
       var alias = { film: 'movie', movies: 'movie', films: 'movie', show: 'series', tv: 'series', games: 'game', videogame: 'game',
-        videogames: 'game', video: 'game', travel: 'country', trip: 'country', place: 'country', lost: 'lynch', losthighway: 'lynch',
+        videogames: 'game', video: 'game', travel: 'country', visited: 'country', visitedcountry: 'country', trip: 'country', place: 'country', lost: 'lynch', losthighway: 'lynch',
         lynchfilm: 'lynch', lynchmovie: 'lynch' };
       var k = alias[a] || a;
       var f = FAVS.filter(function (x) { return x.k === k || x.k.indexOf(k) === 0; })[0];
@@ -345,7 +345,7 @@
       if (f.note) print({ cls: 'tm-dim', text: f.note });
       return;
     }
-    FAVS.forEach(function (f) { kv(f.label.replace(/^favorite |^best /, '').replace(' visited', ''), 'tm-ok', 10, f.val); });
+    FAVS.forEach(function (f) { kv(f.label.replace(/^favorite /, ''), 'tm-ok', 15, f.val); });
   }
 
   function cmdFun() {
