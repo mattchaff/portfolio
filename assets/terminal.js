@@ -258,7 +258,7 @@
 
   /* ---------- cases ---------- */
   var CASES = [
-    { key: 'whitecircle', id: 'white-circle', title: 'White Circle', tag: 'AI safety startup · 2 hires in about a month',
+    { key: 'whitecircle', id: 'white-circle', title: 'White Circle', tag: 'AI safety startup · 2 critical hires in about a month',
       context: 'Inbound request in December 2025 from an early-stage AI safety and security company that had just landed in France.',
       challenge: 'Two urgent, high-bar roles to fill at once: a senior data engineer and an ML researcher, in a fast-paced international environment.',
       how: 'Both people who ended up joining were among the first five candidates I contacted.',
