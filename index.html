@@ -48,7 +48,7 @@
   /* intro */
   .intro{display:flex;gap:28px;align-items:flex-start;margin-bottom:8px;}
   .avatar{
-    cursor:zoom-in;-webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color:transparent;
     width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none;
     filter:grayscale(1);
     border:1px solid var(--line);
@@ -312,23 +312,23 @@
     link.addEventListener('click',function(e){e.preventDefault();openTerminal();});
     ['pointerenter','focus','touchstart'].forEach(function(ev){link.addEventListener(ev,function(){load(false);},{passive:true,once:true});});
   }
-  /* click the photo: "will AI replace your job?" */
-  var ajLoading=false,ajPending=false;
-  function loadAj(thenOpen){
-    if(window.__aijob){if(thenOpen)window.__aijob.open();return;}
-    if(thenOpen)ajPending=true;
-    if(ajLoading)return;
-    ajLoading=true;
+  /* click the photo: a note for fellow recruiters */
+  var rnLoading=false,rnPending=false;
+  function loadNote(thenOpen){
+    if(window.__note){if(thenOpen)window.__note.open();return;}
+    if(thenOpen)rnPending=true;
+    if(rnLoading)return;
+    rnLoading=true;
     var s=document.createElement('script');
-    s.src='assets/ai-job.js?v=3';
-    s.onload=function(){ajLoading=false;if(ajPending&&window.__aijob){ajPending=false;window.__aijob.open();}};
-    s.onerror=function(){ajLoading=false;ajPending=false;};
+    s.src='assets/recruiter-note.js?v=2';
+    s.onload=function(){rnLoading=false;if(rnPending&&window.__note){rnPending=false;window.__note.open();}};
+    s.onerror=function(){rnLoading=false;rnPending=false;};
     document.head.appendChild(s);
   }
   var av=document.getElementById('avatar');
   if(av){
-    av.addEventListener('click',function(){loadAj(true);});
-    ['pointerenter','touchstart'].forEach(function(ev){av.addEventListener(ev,function(){loadAj(false);},{passive:true,once:true});});
+    av.addEventListener('click',function(){loadNote(true);});
+    ['pointerenter','touchstart'].forEach(function(ev){av.addEventListener(ev,function(){loadNote(false);},{passive:true,once:true});});
   }
   var seq=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'],pos=0;
   document.addEventListener('keydown',function(e){
