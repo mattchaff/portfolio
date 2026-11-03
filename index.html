@@ -300,7 +300,7 @@
     if(loading)return;
     loading=true;
     var s=document.createElement('script');
-    s.src='assets/terminal.js?v=20261103c';
+    s.src='assets/terminal.js?v=20261103d';
     s.onload=function(){loading=false;if(pending&&window.__terminal){pending=false;window.__terminal.open();}};
     s.onerror=function(){loading=false;pending=false;};
     document.head.appendChild(s);
