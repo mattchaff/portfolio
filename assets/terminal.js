@@ -76,12 +76,13 @@
     ['help', 'placements', 'contact', 'cv', 'exit'].forEach(function (c) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'tm-chip'; b.textContent = c;
-      b.addEventListener('click', function () { run(c); input.focus(); });
+      b.addEventListener('click', function () { run(c); if (!isTouch()) input.focus(); });
       chips.appendChild(b);
     });
 
     overlay.querySelector('.tm-x').addEventListener('click', close);
     out.addEventListener('click', function () {
+      if (isTouch()) return;
       if (!window.getSelection || String(window.getSelection()) === '') input.focus();
     });
     overlay.querySelector('form').addEventListener('submit', function (e) {
@@ -108,6 +109,7 @@
     });
   }
 
+  function isTouch() { return !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches); }
   var closing = false, closeTimer = null;
   function isOpen() { return overlay && !overlay.hidden && !closing; }
 
@@ -125,7 +127,7 @@
     setPageInert(true);
     track('terminal-open', 'Terminal opened');
     if (!out.childNodes.length) welcome();
-    if (!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches)) input.focus();
+    if (!isTouch()) input.focus();
   }
 
   function setPageInert(on) {
@@ -180,7 +182,9 @@
     print({ cls: 'tm-ps', text: PS + ' ' }, 'whoami');
     cmdWhoami();
     blank();
-    print({ cls: 'tm-dim', text: "Type 'help' for commands. Type 'exit' (or press Esc) to go back to the website." });
+    print({ cls: 'tm-dim', text: isTouch()
+      ? "Tap a button below, or tap the $ line to type. 'exit' goes back to the website."
+      : "Type 'help' for commands. Type 'exit' (or press Esc) to go back to the website." });
     blank();
   }
 
