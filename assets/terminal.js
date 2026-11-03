@@ -219,6 +219,7 @@
 
   function cmdContact() {
     print({ cls: 'tm-ok', text: pad('email', 10) }, { href: 'mailto:' + EMAIL, text: EMAIL });
+    print({ cls: 'tm-ok', text: pad('phone', 10) }, { href: 'tel:+33679220797', text: '06 79 22 07 97' });
     print({ cls: 'tm-ok', text: pad('linkedin', 10) }, { href: LINKEDIN, text: 'linkedin.com/in/matthieu-chaffanjon-a3568a98' });
   }
 
