@@ -286,16 +286,16 @@
 })();
 </script>
 <script>
-/* easter egg: click the photo or enter the Konami code */
+/* easter egg: click the photo or enter the Konami code to open a hidden terminal */
 (function(){
   var loading=false;
   function openEgg(){
-    if(window.__speedrun){window.__speedrun.open();return;}
+    if(window.__terminal){window.__terminal.open();return;}
     if(loading)return;
     loading=true;
     var s=document.createElement('script');
-    s.src='assets/speedrun.js';
-    s.onload=function(){loading=false;if(window.__speedrun)window.__speedrun.open();};
+    s.src='assets/terminal.js';
+    s.onload=function(){loading=false;if(window.__terminal)window.__terminal.open();};
     s.onerror=function(){loading=false;};
     document.head.appendChild(s);
   }
@@ -307,6 +307,12 @@
     if(k===seq[pos]){pos++;if(pos===seq.length){pos=0;openEgg();}}
     else{pos=(k===seq[0])?1:0;}
   });
+  /* message for anyone opening the dev tools */
+  try{
+    console.log('%cYou read the source. We should talk.','font:600 15px system-ui,sans-serif;color:#8ab4ff');
+    console.log('%cI recruit AI research & engineering talent. matthieu.chaff@gmail.com','font:13px system-ui,sans-serif');
+    console.log('%cThere is a hidden terminal on this page: click the photo, or try the Konami code.','font:12px system-ui,sans-serif;color:#9a9a9a');
+  }catch(e){}
 })();
 </script>
 <script data-goatcounter="https://mattchaff96.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
