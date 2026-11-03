@@ -276,6 +276,30 @@
   })();
 })();
 </script>
+<script>
+/* easter egg: click the photo or enter the Konami code */
+(function(){
+  var loading=false;
+  function openEgg(){
+    if(window.__speedrun){window.__speedrun.open();return;}
+    if(loading)return;
+    loading=true;
+    var s=document.createElement('script');
+    s.src='assets/speedrun.js';
+    s.onload=function(){loading=false;if(window.__speedrun)window.__speedrun.open();};
+    s.onerror=function(){loading=false;};
+    document.head.appendChild(s);
+  }
+  var av=document.querySelector('.avatar');
+  if(av)av.addEventListener('click',openEgg);
+  var seq=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'],pos=0;
+  document.addEventListener('keydown',function(e){
+    var k=(e.key||'').toLowerCase();
+    if(k===seq[pos]){pos++;if(pos===seq.length){pos=0;openEgg();}}
+    else{pos=(k===seq[0])?1:0;}
+  });
+})();
+</script>
 <script data-goatcounter="https://mattchaff96.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
