@@ -331,6 +331,9 @@
     blank();
     print({ cls: 'tm-ok', text: 'a past life in music' });
     print('I made music. Rap instrumentals mostly. Sometimes I sang on them too. Tracklist: [REDACTED] (confidentiality).');
+    blank();
+    print({ cls: 'tm-ok', text: 'a lesson in patience' });
+    print('I bought Bitcoin in 2015. I should have kept it.');
   }
 
   function cmdHal() {
