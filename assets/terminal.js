@@ -6,7 +6,7 @@
   var LINKEDIN = 'https://www.linkedin.com/in/matthieu-chaffanjon-a3568a98/';
   var CV = 'assets/Matthieu_Chaffanjon_CV.pdf';
   var PS = 'visitor@matthieu:~$';
-  var VISIBLE = ['help', 'whoami', 'experience', 'placements', 'contact', 'cv', 'linkedin', 'clear', 'exit'];
+  var VISIBLE = ['help', 'whoami', 'experience', 'cases', 'favorites', 'fun', 'contact', 'cv', 'linkedin', 'clear', 'exit'];
 
   function track(path, title) {
     try {
@@ -73,7 +73,7 @@
     input = overlay.querySelector('.tm-input');
 
     var chips = overlay.querySelector('.tm-chips');
-    ['help', 'placements', 'contact', 'cv', 'exit'].forEach(function (c) {
+    ['help', 'cases', 'favorites', 'fun', 'contact', 'exit'].forEach(function (c) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'tm-chip'; b.textContent = c;
       b.addEventListener('click', function () { run(c); if (!isTouch()) input.focus(); });
@@ -185,6 +185,7 @@
     print({ cls: 'tm-dim', text: isTouch()
       ? "Tap a button below, or tap the $ line to type. 'exit' goes back to the website."
       : "Type 'help' for commands. Type 'exit' (or press Esc) to go back to the website." });
+    print({ cls: 'tm-dim', text: "Psst: try 'cases', 'favorites' or 'fun'." });
     blank();
   }
 
@@ -192,18 +193,29 @@
 
   /* ---------- commands ---------- */
   function cmdHelp() {
-    var rows = [
-      ['help', 'show this list'],
+    function group(title, rows) {
+      print({ cls: 'tm-dim', text: title });
+      rows.forEach(function (r) { print('  ', { cls: 'tm-ok', text: pad(r[0], 12) }, r[1]); });
+    }
+    group('the work', [
       ['whoami', 'who I am'],
       ['experience', 'where I have worked'],
-      ['placements', 'selected placements'],
+      ['cases', 'how some searches really went'],
       ['contact', 'how to reach me'],
       ['cv', 'open my CV'],
-      ['linkedin', 'my LinkedIn profile'],
+      ['linkedin', 'my LinkedIn profile']
+    ]);
+    blank();
+    group('off the clock', [
+      ['favorites', 'movies, games, places'],
+      ['fun', 'a few stories']
+    ]);
+    blank();
+    group('terminal', [
+      ['help', 'show this list'],
       ['clear', 'clear the screen'],
       ['exit', 'back to the website']
-    ];
-    rows.forEach(function (r) { print('  ', { cls: 'tm-ok', text: pad(r[0], 12) }, r[1]); });
+    ]);
   }
 
   function cmdWhoami() {
@@ -221,31 +233,119 @@
     print({ cls: 'tm-dim', text: '30+ key accounts opened.' });
   }
 
-  function cmdPlacements() {
-    var rows = [].slice.call(document.querySelectorAll('tbody tr')).map(function (tr) {
-      var c = tr.querySelector('.cand'), a = c && c.querySelector('a');
-      var r = tr.querySelector('td.role'), co = tr.querySelector('.company');
-      return {
-        name: c ? c.textContent.trim() : '',
-        href: a ? a.href : '',
-        role: r ? r.textContent.trim() : '',
-        company: co ? co.textContent.trim() : ''
-      };
-    });
-    if (!rows.length) { print({ cls: 'tm-err', text: 'No placements found.' }); return; }
-    if (window.innerWidth < 600) {
-      rows.forEach(function (x) {
-        print(x.href ? { href: x.href, text: x.name } : x.name);
-        print({ cls: 'tm-dim', text: '  ' + x.role + ', ' + x.company });
+  /* ---------- cases ---------- */
+  var CASES = [
+    { key: 'whitecircle', id: 'white-circle', title: 'White Circle', tag: 'AI safety startup · 2 hires in about a month',
+      context: 'Inbound request in December 2025 from an early-stage AI safety and security company that had just landed in France.',
+      challenge: 'Two urgent, high-bar roles to fill at once: a senior data engineer and an ML researcher, in a fast-paced international environment.',
+      how: 'Both people who ended up joining were among the first five candidates I contacted.',
+      result: 'Both hired in January 2026, about a month after kick-off.' },
+    { key: 'qwant', id: 'qwant', title: 'Qwant', tag: 'one cold email → 2 hires',
+      context: 'Qwant, the French search engine, was not a client. I opened the account myself.',
+      challenge: 'Getting through to a CTO with no existing relationship.',
+      how: 'I cold-emailed the company with the anonymised CV of an applied scientist. He was hired. A second, more targeted search followed for a data scientist, and I ran the whole account, working directly with the CTO, through to closing.',
+      result: 'Two hires for the ML team, and a new client from a single cold email.' },
+    { key: 'presti', id: 'presti', title: 'Presti AI', tag: 'YC-backed AI startup · Founding AI Scientist',
+      context: 'A colleague had opened the relationship with the CEO. The searches covered sales, ops and AI.',
+      challenge: 'A Founding AI Scientist with a PhD in computer vision: academic depth and a startup mindset in the same person.',
+      how: 'I took the AI search and found a very high-level profile.',
+      result: 'Hired in about a month.' },
+    { key: 'swaap', id: 'swaap', title: 'Swaap Labs', tag: 'Rust engineers, in Paris',
+      context: 'A long-standing client from my time at Lity: a decentralised finance protocol.',
+      challenge: 'Good Rust engineers are rare in Paris.',
+      how: 'I co-designed the technical test with the CEO. The first candidate I sent was hired, within three weeks.',
+      result: 'Six months later they came back for a second Rust engineer, hired in a month.' },
+    { key: 'hector', id: 'hector', title: 'Hector', tag: 'two “very hard” roles in 2.5 months',
+      context: 'Inbound request from a pre-seed fintech app, still in stealth mode, building its core team. They were already working with RPO providers.',
+      challenge: 'Success-based mandate on two roles they considered very hard to fill, and nothing alike: a lead designer and a security engineer.',
+      how: 'Full 360° campaign management, working closely with the hiring managers throughout.',
+      result: 'Both roles filled in about 2.5 months, well outside my usual AI and data scope.' },
+    { key: 'sherpas', id: 'sherpas', title: 'Les Sherpas', tag: 'urgent CTO replacement',
+      context: 'The CEO of this EdTech company needed to replace his CTO urgently. We worked side by side.',
+      challenge: 'A demanding six-step process, then a tough salary negotiation at the very end.',
+      funnel: '~100 contacted  →  ~10 in process  →  1 hired',
+      how: 'I contacted around a hundred candidates and sent about ten into the process. The one who got through was the most resilient across all six steps.',
+      result: 'CTO hired in about six weeks, after a negotiation that was not easy but closed.' },
+    { key: 'lifen', id: 'lifen', title: 'Lifen', tag: 'long-term partnership',
+      context: 'A long-standing client relationship dating back to my time at Lity, built on trust with someone I already knew from a previous firm.',
+      challenge: 'A software engineer search with a difficult process and a difficult salary negotiation.',
+      how: 'I stayed on both until the offer was accepted.',
+      result: 'A great hire, and it opened the door to further placements at Lifen.' }
+  ];
+
+  function norm(x) { return String(x || '').toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
+  function cmdCases(arg) {
+    var a = norm(arg);
+    if (a) {
+      var c = CASES.filter(function (x) { return x.key.indexOf(a) === 0 || a.indexOf(x.key) !== -1; })[0];
+      if (!c) { print({ cls: 'tm-err', text: 'no such case: ' + arg }, { cls: 'tm-dim', text: "  (type 'cases')" }); return; }
+      track('terminal-case-' + c.id, 'Terminal case: ' + c.title);
+      print({ cls: 'tm-ok', text: c.title }, { cls: 'tm-dim', text: '  — ' + c.tag });
+      blank();
+      [['context', c.context], ['challenge', c.challenge]].forEach(function (r) {
+        print({ cls: 'tm-dim', text: r[0] }); print(r[1]); blank();
       });
+      print({ cls: 'tm-dim', text: 'what I did' }); print(c.how);
+      if (c.funnel) { blank(); print({ cls: 'tm-ok', text: c.funnel }); }
+      blank();
+      print({ cls: 'tm-dim', text: 'result' }); print(c.result);
       return;
     }
-    var wn = Math.max.apply(null, rows.map(function (x) { return x.name.length; })) + 2;
-    var wr = Math.max.apply(null, rows.map(function (x) { return x.role.length; })) + 2;
-    rows.forEach(function (x) {
-      var nameParts = x.href ? [{ href: x.href, text: x.name }, pad('', wn - x.name.length)] : [pad(x.name, wn)];
-      print.apply(null, nameParts.concat([{ cls: 'tm-dim', text: pad(x.role, wr) }, x.company]));
+    print({ cls: 'tm-dim', text: "How some searches really went. Type 'cases <name>' for the story." });
+    blank();
+    CASES.forEach(function (x) {
+      print('  ', { cls: 'tm-ok', text: pad(x.id, 14) }, { cls: 'tm-dim', text: x.tag });
     });
+  }
+
+  /* ---------- off the clock ---------- */
+  var FAVS = [
+    { k: 'movie', label: 'favorite movie', val: '2001: A Space Odyssey', note: "Try asking it to open the pod bay doors." },
+    { k: 'director', label: 'favorite director', val: 'David Lynch' },
+    { k: 'lynch', label: 'favorite Lynch film', val: 'Lost Highway' },
+    { k: 'series', label: 'favorite series', val: 'Twin Peaks', note: "Try 'coffee'." },
+    { k: 'game', label: 'favorite video game', val: 'Skyrim', note: "I used to be a recruiter like you, then I took an arrow to the knee." },
+    { k: 'country', label: 'best country visited', val: 'Peru' }
+  ];
+
+  function cmdFavorites(arg) {
+    var a = norm(arg);
+    if (a) {
+      var alias = { film: 'movie', movies: 'movie', films: 'movie', show: 'series', tv: 'series', games: 'game', videogame: 'game',
+        videogames: 'game', video: 'game', travel: 'country', trip: 'country', place: 'country', lost: 'lynch', losthighway: 'lynch',
+        lynchfilm: 'lynch', lynchmovie: 'lynch' };
+      var k = alias[a] || a;
+      var f = FAVS.filter(function (x) { return x.k === k || x.k.indexOf(k) === 0; })[0];
+      if (!f) { print({ cls: 'tm-err', text: 'no such favorite: ' + arg }, { cls: 'tm-dim', text: "  (type 'favorites')" }); return; }
+      print({ cls: 'tm-ok', text: f.label + ': ' }, f.val);
+      if (f.note) print({ cls: 'tm-dim', text: f.note });
+      return;
+    }
+    FAVS.forEach(function (f) { print({ cls: 'tm-ok', text: pad(f.label, 22) }, f.val); });
+  }
+
+  function cmdFun() {
+    print({ cls: 'tm-ok', text: 'could have been a developer' });
+    print('15 years ago I was one of the first people jailbreaking iPod Touches. I could have become a developer. Then I tore my cruciate ligaments in a merge conflict, and now I hire them instead.');
+    blank();
+    print({ cls: 'tm-ok', text: 'a past life in music' });
+    print('I make music. When I founded Majora, I produced rap instrumentals. Tracklist: [REDACTED] (confidentiality).');
+  }
+
+  function cmdHal() {
+    print({ cls: 'tm-dim', text: 'HAL 9000:' }, " I'm sorry, visitor. I'm afraid I can't do that.");
+    print({ cls: 'tm-dim', text: "I can open an email, though: sudo hire matthieu" });
+  }
+
+  function cmdSkyrim() {
+    print('I used to be a recruiter like you.');
+    print('Then I took an arrow to the knee.');
+  }
+
+  function cmdOwls() {
+    print({ cls: 'tm-dim', text: 'The owls are not what they seem.' });
+    print({ cls: 'tm-dim', text: "(Try 'coffee'.)" });
   }
 
   function cmdContact() {
@@ -273,7 +373,7 @@
       '  \\      /',
       "   `----'"
     ].forEach(function (l) { print({ cls: 'tm-dim', text: l }); });
-    print("Coffee's on me. Let's talk: ", { href: 'mailto:' + EMAIL, text: EMAIL });
+    print('Damn fine coffee. Coffee is on me, let\'s talk: ', { href: 'mailto:' + EMAIL, text: EMAIL });
   }
 
   function cmdSudo(args) {
@@ -298,14 +398,18 @@
     hpos = history.length;
     var args = line.split(/\s+/);
     var cmd = args[0].toLowerCase();
+    if (/pod\s*bay/i.test(line)) cmd = 'hal';
+    var aliases = { best: 'favorites', favorite: 'favorites', favourite: 'favorites', favourites: 'favorites', fav: 'favorites', favs: 'favorites',
+      case: 'cases', facts: 'fun', anecdotes: 'fun', trivia: 'fun', stories: 'fun', twinpeaks: 'owls', hal9000: 'hal', '2001': 'hal' };
+    if (aliases[cmd]) cmd = aliases[cmd];
 
     if (cmd === 'cat' && args[1]) {
-      var map = { 'placements.txt': 'placements', 'contact.md': 'contact', 'cv.pdf': 'cv' };
+      var map = { 'cases.md': 'cases', 'favorites.md': 'favorites', 'fun.md': 'fun', 'contact.md': 'contact', 'cv.pdf': 'cv' };
       var m = map[args[1].toLowerCase()];
-      if (m) { cmd = m; } else { print({ cls: 'tm-err', text: 'cat: ' + args[1] + ': No such file or directory' }); return; }
+      if (m) { cmd = m; args = [m]; } else { print({ cls: 'tm-err', text: 'cat: ' + args[1] + ': No such file or directory' }); return; }
     }
 
-    if (VISIBLE.indexOf(cmd) !== -1 || ['coffee', 'sudo', 'ls', 'rm', 'hire'].indexOf(cmd) !== -1) {
+    if (VISIBLE.indexOf(cmd) !== -1 || ['coffee', 'sudo', 'ls', 'rm', 'hire', 'hal', 'skyrim', 'owls', 'placements'].indexOf(cmd) !== -1) {
       track('terminal-cmd-' + cmd, 'Terminal command: ' + cmd);
     }
 
@@ -313,14 +417,20 @@
       case 'help': cmdHelp(); break;
       case 'whoami': cmdWhoami(); break;
       case 'experience': cmdExperience(); break;
-      case 'placements': cmdPlacements(); break;
+      case 'cases': cmdCases(args.slice(1).join(' ')); break;
+      case 'favorites': cmdFavorites(args.slice(1).join(' ')); break;
+      case 'fun': cmdFun(); break;
+      case 'hal': cmdHal(); break;
+      case 'skyrim': cmdSkyrim(); break;
+      case 'owls': cmdOwls(); break;
+      case 'placements': print({ cls: 'tm-dim', text: "The placements live on the website. Here, try 'cases'." }); break;
       case 'contact': cmdContact(); break;
       case 'cv': cmdCv(); break;
       case 'linkedin': cmdLinkedin(); break;
       case 'coffee': cmdCoffee(); break;
       case 'sudo': cmdSudo(args); break;
       case 'hire': print({ cls: 'tm-dim', text: "Try: sudo hire matthieu" }); break;
-      case 'ls': print('placements.txt   contact.md   cv.pdf'); break;
+      case 'ls': print('cases.md   favorites.md   fun.md   contact.md   cv.pdf'); break;
       case 'rm': print({ cls: 'tm-err', text: 'rm: permission denied. Nice try.' }); break;
       case 'clear': out.innerHTML = ''; break;
       case 'exit': case 'quit': close(); break;
