@@ -20,8 +20,12 @@
     '.tm-overlay{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;background:#0a0b0a;color:#d6dad6;font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;}' +
     '.tm-overlay[hidden]{display:none;}' +
     '.tm-overlay::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.022) 0,rgba(255,255,255,.022) 1px,transparent 1px,transparent 3px);}' +
-    '@keyframes tmBoot{0%{opacity:0;transform:scale(.6,.01)}40%{opacity:1;transform:scale(1,.01)}100%{opacity:1;transform:none}}' +
-    '.tm-overlay.tm-boot{animation:tmBoot .45s cubic-bezier(.2,.8,.2,1) both;}' +
+    '.tm-overlay{opacity:0;transition:opacity .9s ease;}' +
+    '.tm-overlay.tm-on{opacity:1;}' +
+    '.tm-overlay .tm-bar,.tm-overlay .tm-inner{opacity:0;transform:translateY(6px);transition:opacity .7s ease .35s,transform .7s ease .35s;}' +
+    '.tm-overlay.tm-on .tm-bar,.tm-overlay.tm-on .tm-inner{opacity:1;transform:none;}' +
+    '.wrap{transition:opacity .7s ease,filter .7s ease;}' +
+    'body.tm-active .wrap{opacity:0;filter:blur(3px);}' +
     '.tm-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #1d231e;font-size:12px;color:#7d867f;}' +
     '.tm-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
     '.tm-x{font:inherit;font-size:12px;color:#aab3ac;background:transparent;border:1px solid #2a312c;border-radius:4px;padding:3px 11px;cursor:pointer;}' +
@@ -104,16 +108,19 @@
     });
   }
 
-  function isOpen() { return overlay && !overlay.hidden; }
+  var closing = false, closeTimer = null;
+  function isOpen() { return overlay && !overlay.hidden && !closing; }
 
   function open() {
     if (isOpen()) return;
     ensureDom();
     lastFocus = document.activeElement;
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    closing = false;
     overlay.hidden = false;
-    overlay.classList.remove('tm-boot');
     void overlay.offsetWidth;
-    overlay.classList.add('tm-boot');
+    overlay.classList.add('tm-on');
+    document.body.classList.add('tm-active');
     document.body.style.overflow = 'hidden';
     setPageInert(true);
     track('terminal-open', 'Terminal opened');
@@ -130,9 +137,14 @@
 
   function close() {
     if (!isOpen()) return;
-    overlay.hidden = true;
+    closing = true;
+    overlay.classList.remove('tm-on');
+    document.body.classList.remove('tm-active');
     document.body.style.overflow = '';
     setPageInert(false);
+    closeTimer = setTimeout(function () {
+      overlay.hidden = true; closing = false; closeTimer = null;
+    }, 950);
     if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
   }
 
