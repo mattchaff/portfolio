@@ -15,7 +15,7 @@
   /* [regex on the lowercased, accent-free job, % chance, one-liner]. First match wins. */
   var JOBS = [
     [/^(an? |the )?(ai|a\.i\.|chatgpt|claude|llm|robot|bot|gpt)( model| agent)?$/, 100, 'You are the AI. A newer model came out while you were reading this.'],
-    [/recruit|recrut|talent acq|sourcer|headhunt|chasseur de t/, 47, 'The copy-paste InMail half is already gone. The other half is fine. Probably.', 'recruiter'],
+    [/recruit|recrut|talent|sourcer|headhunt|chasseur de t|\bhr\b|\brh\b|human resources|ressources humaines|people ops|people partner/, 47, 'Fellow recruiter: risky, not fatal. Nobody replaces us tomorrow.', 'recruiter'],
     [/machine learning|\bml\b|ai research|research scientist|deep learning|\bnlp\b/, 14, 'You are building the thing. Hard to fire the builder. For now.'],
     [/data scien|data analy|analyste|analytics/, 66, 'The notebook is already writing itself.'],
     [/software|developer|developpeur|programmer|programmeur|front.?end|back.?end|full.?stack|devops|\bdev\b|coder/, 62, 'AI writes the code. You explain it to the PM.'],
@@ -81,7 +81,7 @@
     '.aj-back{position:fixed;inset:0;z-index:1100;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,10,10,.72);opacity:0;transition:opacity .2s ease-out;}' +
     '.aj-back[hidden]{display:none;}' +
     '.aj-back.aj-on{opacity:1;}' +
-    '.aj-card{width:100%;max-width:420px;background:#232324;border:1px solid #333334;border-radius:14px;padding:26px 24px 22px;color:#e8e8e8;font-family:inherit;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(8px) scale(.98);transition:transform .25s ease-out;}' +
+    '.aj-card{width:100%;max-width:440px;max-height:calc(100vh - 40px);overflow-y:auto;background:#232324;border:1px solid #333334;border-radius:14px;padding:26px 24px 22px;color:#e8e8e8;font-family:inherit;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(8px) scale(.98);transition:transform .25s ease-out;}' +
     '.aj-on .aj-card{transform:none;}' +
     '.aj-q{font-size:20px;font-weight:600;line-height:1.3;margin:0 0 6px;}' +
     '.aj-sub{font-size:14px;color:#9a9a9a;margin:0 0 16px;line-height:1.5;}' +
@@ -101,8 +101,12 @@
     '.aj-quip{font-size:15px;line-height:1.5;margin:0 0 6px;color:#e8e8e8;}' +
     '.aj-verdict{font-size:15px;line-height:1.5;margin:0 0 16px;font-weight:600;}' +
     '.aj-note{font-size:12px;color:#6b6b6b;margin:14px 0 0;line-height:1.5;}' +
+    '.aj-list{margin:0 0 14px;padding-left:18px;font-size:14px;line-height:1.55;color:#cfcfcf;}' +
+    '.aj-list li{margin:0 0 4px;}' +
+    '.aj-sub2{font-size:13px;color:#9a9a9a;margin:0 0 6px;}' +
     '.aj-row{display:flex;gap:8px;flex-wrap:wrap;}' +
-    '.aj-card a{color:#8ab4ff;}';
+    '.aj-card a{color:#8ab4ff;overflow-wrap:anywhere;}' +
+    '@media (max-width:480px){.aj-card{padding:20px 18px 18px;}.aj-num{font-size:52px;}.aj-q{font-size:18px;}}';
 
   var styleEl = document.createElement('style');
   styleEl.textContent = css;
@@ -148,7 +152,7 @@
     card.appendChild(el('p', 'aj-sub', 'Quick scientific analysis of how likely AI is to take it.'));
     var form = el('form', 'aj-form');
     var input = el('input', 'aj-input');
-    input.type = 'text'; input.maxLength = 60; input.placeholder = 'e.g. accountant';
+    input.type = 'text'; input.maxLength = 60; input.placeholder = 'e.g. recruiter';
     input.setAttribute('aria-label', 'Your job');
     input.autocomplete = 'off'; input.autocapitalize = 'off'; input.spellcheck = false;
     if (prefill) input.value = prefill;
@@ -191,14 +195,21 @@
     lab.appendChild(document.createTextNode(' gets replaced by AI.'));
     card.appendChild(lab);
     card.appendChild(el('p', 'aj-quip', r.quip));
-    card.appendChild(el('p', 'aj-verdict', verdict(r.pct)));
-
     if (r.kind === 'recruiter') {
+      card.appendChild(el('p', 'aj-quip', 'People still hire people. But recruiters who use LLMs for sharp, precise searches will quietly eat the ones who do not. The AI will not take your job. A recruiter with an AI will.'));
+      card.appendChild(el('p', 'aj-sub2', 'Start this week:'));
+      var ul = el('ul', 'aj-list');
+      ['Intake calls \u2192 search briefs and Boolean strings.',
+       'Let the model screen the long list.',
+       'Outreach that does not read like outreach.'].forEach(function (t) { ul.appendChild(el('li', '', t)); });
+      card.appendChild(ul);
       var p = el('p', 'aj-quip');
-      p.appendChild(document.createTextNode('Funny, same job as me. Let’s talk: '));
+      p.appendChild(document.createTextNode('We are in this together. Compare notes? '));
       var a = document.createElement('a'); a.href = 'mailto:' + EMAIL; a.textContent = EMAIL;
       p.appendChild(a);
       card.appendChild(p);
+    } else {
+      card.appendChild(el('p', 'aj-verdict', verdict(r.pct)));
     }
 
     var row = el('div', 'aj-row');

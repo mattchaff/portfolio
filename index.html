@@ -48,7 +48,7 @@
   /* intro */
   .intro{display:flex;gap:28px;align-items:flex-start;margin-bottom:8px;}
   .avatar{
-    cursor:pointer;-webkit-tap-highlight-color:transparent;
+    cursor:zoom-in;-webkit-tap-highlight-color:transparent;
     width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none;
     filter:grayscale(1);
     border:1px solid var(--line);
@@ -320,7 +320,7 @@
     if(ajLoading)return;
     ajLoading=true;
     var s=document.createElement('script');
-    s.src='assets/ai-job.js?v=1';
+    s.src='assets/ai-job.js?v=3';
     s.onload=function(){ajLoading=false;if(ajPending&&window.__aijob){ajPending=false;window.__aijob.open();}};
     s.onerror=function(){ajLoading=false;ajPending=false;};
     document.head.appendChild(s);
