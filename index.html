@@ -48,6 +48,7 @@
   /* intro */
   .intro{display:flex;gap:28px;align-items:flex-start;margin-bottom:8px;}
   .avatar{
+    cursor:pointer;-webkit-tap-highlight-color:transparent;
     width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none;
     filter:grayscale(1);
     border:1px solid var(--line);
@@ -169,7 +170,7 @@
 <div class="wrap">
 
   <div class="intro">
-    <img class="avatar" src="assets/matthieu.jpg" alt="Matthieu Chaffanjon">
+    <img class="avatar" id="avatar" src="assets/matthieu.jpg" alt="Matthieu Chaffanjon">
     <div>
       <h1>Matthieu Chaffanjon</h1>
       <p class="role">Senior Tech Recruiter<span class="sep"> — </span><br class="mbr">AI <span id="rot" class="rot">Research &amp; Engineering</span> Talent</p>
@@ -311,6 +312,24 @@
     link.addEventListener('click',function(e){e.preventDefault();openTerminal();});
     ['pointerenter','focus','touchstart'].forEach(function(ev){link.addEventListener(ev,function(){load(false);},{passive:true,once:true});});
   }
+  /* click the photo: "will AI replace your job?" */
+  var ajLoading=false,ajPending=false;
+  function loadAj(thenOpen){
+    if(window.__aijob){if(thenOpen)window.__aijob.open();return;}
+    if(thenOpen)ajPending=true;
+    if(ajLoading)return;
+    ajLoading=true;
+    var s=document.createElement('script');
+    s.src='assets/ai-job.js?v=1';
+    s.onload=function(){ajLoading=false;if(ajPending&&window.__aijob){ajPending=false;window.__aijob.open();}};
+    s.onerror=function(){ajLoading=false;ajPending=false;};
+    document.head.appendChild(s);
+  }
+  var av=document.getElementById('avatar');
+  if(av){
+    av.addEventListener('click',function(){loadAj(true);});
+    ['pointerenter','touchstart'].forEach(function(ev){av.addEventListener(ev,function(){loadAj(false);},{passive:true,once:true});});
+  }
   var seq=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'],pos=0;
   document.addEventListener('keydown',function(e){
     var k=(e.key||'').toLowerCase();
@@ -321,7 +340,7 @@
   try{
     console.log('%cYou read the source. We should talk.','font:600 15px system-ui,sans-serif;color:#8ab4ff');
     console.log('%cI recruit AI research & engineering talent. matthieu.chaff@gmail.com','font:13px system-ui,sans-serif');
-    console.log('%cThis page has a terminal mode: click the <_ icon next to the CV.','font:12px system-ui,sans-serif;color:#9a9a9a');
+    console.log('%cThis page has a terminal mode: click the <_ icon next to the CV. Also: click my face.','font:12px system-ui,sans-serif;color:#9a9a9a');
   }catch(e){}
 })();
 </script>
