@@ -17,30 +17,30 @@
   }
 
   var css = '' +
-    '.tm-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,10,10,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:tmFade .2s ease both;}' +
+    '.tm-overlay{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;background:#0a0b0a;color:#d6dad6;font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;}' +
     '.tm-overlay[hidden]{display:none;}' +
-    '@keyframes tmFade{from{opacity:0}to{opacity:1}}' +
-    '.tm-win{width:100%;max-width:680px;height:min(520px,calc(100vh - 32px));display:flex;flex-direction:column;background:#0f0f10;border:1px solid var(--line,#333334);border-radius:10px;overflow:hidden;font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;}' +
-    '.tm-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line,#333334);font-size:12px;color:var(--muted,#9a9a9a);}' +
-    '.tm-dots{display:flex;gap:6px;}' +
-    '.tm-dots i{width:10px;height:10px;border-radius:50%;background:#3a3a3b;display:block;}' +
-    '.tm-title{flex:1;text-align:center;}' +
-    '.tm-x{background:none;border:0;color:var(--muted,#9a9a9a);font:inherit;font-size:18px;line-height:1;cursor:pointer;padding:0 4px;}' +
-    '.tm-x:hover{color:var(--text,#e8e8e8);}' +
-    '.tm-out{flex:1;overflow-y:auto;padding:14px 16px 6px;font-size:13px;line-height:1.6;color:#d8d8d8;}' +
-    '.tm-line{white-space:pre-wrap;word-break:break-word;min-height:1.6em;}' +
+    '.tm-overlay::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.022) 0,rgba(255,255,255,.022) 1px,transparent 1px,transparent 3px);}' +
+    '@keyframes tmBoot{0%{opacity:0;transform:scale(.6,.01)}40%{opacity:1;transform:scale(1,.01)}100%{opacity:1;transform:none}}' +
+    '.tm-overlay.tm-boot{animation:tmBoot .45s cubic-bezier(.2,.8,.2,1) both;}' +
+    '.tm-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #1d231e;font-size:12px;color:#7d867f;}' +
+    '.tm-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
+    '.tm-x{font:inherit;font-size:12px;color:#aab3ac;background:transparent;border:1px solid #2a312c;border-radius:4px;padding:3px 11px;cursor:pointer;}' +
+    '.tm-x:hover{border-color:#7ee787;color:#fff;}' +
+    '.tm-inner{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:880px;margin:0 auto;}' +
+    '.tm-out{flex:1;overflow-y:auto;padding:20px 16px 6px;font-size:14px;line-height:1.65;}' +
+    '.tm-line{white-space:pre-wrap;word-break:break-word;min-height:1.65em;}' +
     '.tm-line a{color:#8ab4ff;text-decoration:none;border-bottom:1px solid rgba(138,180,255,.4);}' +
     '.tm-line a:hover{border-bottom-color:#8ab4ff;}' +
-    '.tm-dim{color:#8a8a8a;}' +
-    '.tm-ok{color:#8fdc9f;}' +
+    '.tm-dim{color:#7d867f;}' +
+    '.tm-ok{color:#7ee787;}' +
     '.tm-err{color:#ff9a9a;}' +
-    '.tm-ps{color:#8fdc9f;}' +
-    '.tm-chips{display:flex;flex-wrap:wrap;gap:6px;padding:6px 16px 0;}' +
-    '.tm-chip{font:inherit;font-size:12px;color:#bdbdbd;background:transparent;border:1px solid #3a3a3b;border-radius:999px;padding:3px 11px;cursor:pointer;}' +
-    '.tm-chip:hover{border-color:#8a8a8a;color:#fff;}' +
-    '.tm-row{display:flex;align-items:center;gap:8px;padding:10px 16px 14px;font-size:13px;}' +
-    '.tm-input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#f2f2f2;font:inherit;font-size:16px;caret-color:#8fdc9f;padding:0;}' +
-    '@media (min-width:600px){.tm-input{font-size:13px;}}';
+    '.tm-ps{color:#7ee787;}' +
+    '.tm-chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 0;}' +
+    '.tm-chip{font:inherit;font-size:12px;color:#aab3ac;background:transparent;border:1px solid #2a312c;border-radius:999px;padding:3px 11px;cursor:pointer;}' +
+    '.tm-chip:hover{border-color:#7ee787;color:#fff;}' +
+    '.tm-row{display:flex;align-items:center;gap:8px;padding:12px 16px 18px;font-size:14px;}' +
+    '.tm-input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#f2f2f2;font:inherit;font-size:16px;caret-color:#7ee787;padding:0;}' +
+    '@media (min-width:600px){.tm-input{font-size:14px;}}';
 
   var styleEl = document.createElement('style');
   styleEl.textContent = css;
@@ -56,10 +56,10 @@
     overlay.hidden = true;
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', 'Terminal');
+    overlay.setAttribute('aria-label', 'Terminal mode');
     overlay.innerHTML =
-      '<div class="tm-win">' +
-        '<div class="tm-bar"><span class="tm-dots"><i></i><i></i><i></i></span><span class="tm-title">visitor@matthieu: ~</span><button class="tm-x" type="button" aria-label="Close">&times;</button></div>' +
+      '<div class="tm-bar"><span class="tm-title">visitor@matthieu: ~ (terminal mode)</span><button class="tm-x" type="button" aria-label="Back to the website">exit</button></div>' +
+      '<div class="tm-inner">' +
         '<div class="tm-out" aria-live="polite"></div>' +
         '<div class="tm-chips"></div>' +
         '<form class="tm-row"><span class="tm-ps">$</span><input class="tm-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal input"></form>' +
@@ -69,14 +69,13 @@
     input = overlay.querySelector('.tm-input');
 
     var chips = overlay.querySelector('.tm-chips');
-    ['help', 'placements', 'contact', 'cv'].forEach(function (c) {
+    ['help', 'placements', 'contact', 'cv', 'exit'].forEach(function (c) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'tm-chip'; b.textContent = c;
       b.addEventListener('click', function () { run(c); input.focus(); });
       chips.appendChild(b);
     });
 
-    overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) close(); });
     overlay.querySelector('.tm-x').addEventListener('click', close);
     out.addEventListener('click', function () {
       if (!window.getSelection || String(window.getSelection()) === '') input.focus();
@@ -112,16 +111,28 @@
     ensureDom();
     lastFocus = document.activeElement;
     overlay.hidden = false;
+    overlay.classList.remove('tm-boot');
+    void overlay.offsetWidth;
+    overlay.classList.add('tm-boot');
     document.body.style.overflow = 'hidden';
+    setPageInert(true);
     track('terminal-open', 'Terminal opened');
     if (!out.childNodes.length) welcome();
-    input.focus();
+    if (!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches)) input.focus();
+  }
+
+  function setPageInert(on) {
+    var w = document.querySelector('.wrap');
+    if (!w) return;
+    try { w.inert = on; } catch (e) {}
+    if (on) w.setAttribute('aria-hidden', 'true'); else w.removeAttribute('aria-hidden');
   }
 
   function close() {
     if (!isOpen()) return;
     overlay.hidden = true;
     document.body.style.overflow = '';
+    setPageInert(false);
     if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
   }
 
@@ -152,8 +163,12 @@
   function blank() { print(''); }
 
   function welcome() {
-    print({ cls: 'tm-ok', text: 'Welcome. You found the hidden terminal.' });
-    print({ cls: 'tm-dim', text: "Type 'help' to get started. There may be a few hidden commands." });
+    print({ cls: 'tm-dim', text: 'matthieu.sh \u2014 terminal mode' });
+    blank();
+    print({ cls: 'tm-ps', text: PS + ' ' }, 'whoami');
+    cmdWhoami();
+    blank();
+    print({ cls: 'tm-dim', text: "Type 'help' for commands. Type 'exit' (or press Esc) to go back to the website." });
     blank();
   }
 
@@ -170,7 +185,7 @@
       ['cv', 'open my CV'],
       ['linkedin', 'my LinkedIn profile'],
       ['clear', 'clear the screen'],
-      ['exit', 'close the terminal']
+      ['exit', 'back to the website']
     ];
     rows.forEach(function (r) { print('  ', { cls: 'tm-ok', text: pad(r[0], 12) }, r[1]); });
   }
