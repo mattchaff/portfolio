@@ -35,6 +35,9 @@
     '.tm-line{white-space:pre-wrap;word-break:break-word;min-height:1.65em;}' +
     '.tm-line a{color:#8ab4ff;text-decoration:none;border-bottom:1px solid rgba(138,180,255,.4);}' +
     '.tm-line a:hover{border-bottom-color:#8ab4ff;}' +
+    '.tm-kv{display:grid;grid-template-columns:var(--w,12ch) minmax(0,1fr);column-gap:2ch;white-space:normal;}' +
+    '.tm-kv>span:first-child{white-space:pre;}' +
+    '.tm-kv>span:last-child{white-space:pre-wrap;overflow-wrap:anywhere;}' +
     '.tm-dim{color:#7d867f;}' +
     '.tm-ok{color:#7ee787;}' +
     '.tm-err{color:#ff9a9a;}' +
@@ -73,7 +76,7 @@
     input = overlay.querySelector('.tm-input');
 
     var chips = overlay.querySelector('.tm-chips');
-    ['help', 'cases', 'favorites', 'fun', 'contact', 'exit'].forEach(function (c) {
+    ['help', 'cases', 'favorites', 'fun', 'contact'].forEach(function (c) {
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'tm-chip'; b.textContent = c;
       b.addEventListener('click', function () { run(c); if (!isTouch()) input.focus(); });
@@ -152,10 +155,8 @@
 
   /* ---------- output helpers ---------- */
   // parts: strings, or {href, text}, or {cls, text}
-  function print() {
-    var line = document.createElement('div');
-    line.className = 'tm-line';
-    Array.prototype.slice.call(arguments).forEach(function (p) {
+  function appendParts(line, parts) {
+    parts.forEach(function (p) {
       if (typeof p === 'string') {
         line.appendChild(document.createTextNode(p));
       } else if (p && p.href) {
@@ -170,6 +171,28 @@
         line.appendChild(s);
       }
     });
+  }
+
+  function print() {
+    var line = document.createElement('div');
+    line.className = 'tm-line';
+    appendParts(line, Array.prototype.slice.call(arguments));
+    out.appendChild(line);
+    out.scrollTop = out.scrollHeight;
+  }
+
+  // two-column row: label (fixed width in ch) + wrapping value with hanging indent
+  function kv(label, labelCls, width) {
+    var rest = Array.prototype.slice.call(arguments, 3);
+    var line = document.createElement('div');
+    line.className = 'tm-line tm-kv';
+    line.style.setProperty('--w', width + 'ch');
+    var l = document.createElement('span');
+    if (labelCls) l.className = labelCls;
+    l.textContent = label;
+    var v = document.createElement('span');
+    appendParts(v, rest);
+    line.appendChild(l); line.appendChild(v);
     out.appendChild(line);
     out.scrollTop = out.scrollHeight;
   }
@@ -195,12 +218,12 @@
   function cmdHelp() {
     function group(title, rows) {
       print({ cls: 'tm-dim', text: title });
-      rows.forEach(function (r) { print('  ', { cls: 'tm-ok', text: pad(r[0], 12) }, r[1]); });
+      rows.forEach(function (r) { kv('  ' + r[0], 'tm-ok', 12, r[1]); });
     }
     group('the work', [
       ['whoami', 'who I am'],
       ['experience', 'where I have worked'],
-      ['cases', 'how some searches really went'],
+      ['cases', 'how searches really went'],
       ['contact', 'how to reach me'],
       ['cv', 'open my CV'],
       ['linkedin', 'my LinkedIn profile']
@@ -226,9 +249,9 @@
   }
 
   function cmdExperience() {
-    print({ cls: 'tm-ok', text: pad('Lity', 15) }, 'led the Data/AI practice  ', { href: 'https://lity.so', text: 'lity.so' });
-    print({ cls: 'tm-ok', text: pad('Bluecoders', 15) }, 'independent  ', { href: 'https://bluecoders.com', text: 'bluecoders.com' });
-    print({ cls: 'tm-ok', text: pad('Axioma Search', 15) }, 'independent  ', { href: 'https://www.axiomasearch.com/', text: 'axiomasearch.com' });
+    kv('Lity', 'tm-ok', 13, 'led the Data/AI practice  ', { href: 'https://lity.so', text: 'lity.so' });
+    kv('Bluecoders', 'tm-ok', 13, 'independent  ', { href: 'https://bluecoders.com', text: 'bluecoders.com' });
+    kv('Axioma Search', 'tm-ok', 13, 'independent  ', { href: 'https://www.axiomasearch.com/', text: 'axiomasearch.com' });
     blank();
     print({ cls: 'tm-dim', text: '30+ key accounts opened.' });
   }
@@ -295,7 +318,7 @@
     print({ cls: 'tm-dim', text: "How some searches really went. Type 'cases <name>' for the story." });
     blank();
     CASES.forEach(function (x) {
-      print('  ', { cls: 'tm-ok', text: pad(x.id, 14) }, { cls: 'tm-dim', text: x.tag });
+      kv('  ' + x.id, 'tm-ok', 14, { cls: 'tm-dim', text: x.tag });
     });
   }
 
@@ -322,7 +345,7 @@
       if (f.note) print({ cls: 'tm-dim', text: f.note });
       return;
     }
-    FAVS.forEach(function (f) { print({ cls: 'tm-ok', text: pad(f.label, 22) }, f.val); });
+    FAVS.forEach(function (f) { kv(f.label.replace(/^favorite |^best /, '').replace(' visited', ''), 'tm-ok', 10, f.val); });
   }
 
   function cmdFun() {
@@ -352,9 +375,9 @@
   }
 
   function cmdContact() {
-    print({ cls: 'tm-ok', text: pad('email', 10) }, { href: 'mailto:' + EMAIL, text: EMAIL });
-    print({ cls: 'tm-ok', text: pad('phone', 10) }, { href: 'tel:+33679220797', text: '06 79 22 07 97' });
-    print({ cls: 'tm-ok', text: pad('linkedin', 10) }, { href: LINKEDIN, text: 'linkedin.com/in/matthieu-chaffanjon-a3568a98' });
+    kv('email', 'tm-ok', 8, { href: 'mailto:' + EMAIL, text: EMAIL });
+    kv('phone', 'tm-ok', 8, { href: 'tel:+33679220797', text: '06 79 22 07 97' });
+    kv('linkedin', 'tm-ok', 8, { href: LINKEDIN, text: 'linkedin.com/in/matthieu-chaffanjon-a3568a98' });
   }
 
   function cmdCv() {
